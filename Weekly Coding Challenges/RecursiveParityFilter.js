@@ -9,13 +9,13 @@ function getItemsAt(arr, par) {
     let items = [];
     let remainder;
 
-    if (arr.length == 0) return items;
-
     try {
+        if (arr.length == 0) return items;
+
         // deciding what remainder to check for depending on given positional parity
         if (par === "even") remainder = 0;
         else if (par === "odd") remainder = 1;
-        else throw "Unexpected Positional Parity";
+        else throw new Error("Unexpected Positional Parity");
 
         // filtering
         if (arr.length % 2 == remainder) {
@@ -30,7 +30,7 @@ function getItemsAt(arr, par) {
         return items;
     }
     catch (err) {
-        return console.log(err);
+        return err;
     }
 }
 
@@ -41,18 +41,21 @@ function testExamples() {
 
     output = getItemsAt(["E", "D", "A", "B", "I", "T"], "even");
     test(output, ["E", "A", "I"]);
-    
+
     output = getItemsAt([")", "(", "*", "&", "^", "%", "$", "#", "@", "!"], "even");
     test(output, [")", "*", "^", "$", "@"]);
-    
+
     output = getItemsAt(["A", "R", "B", "I", "T", "R", "A", "R", "I", "L", "Y"], "even");
     test(output, ["R", "I", "R", "R", "L"]);
 }
 
 // compares the actual and expected output arrays
 function test(actual, expected) {
-    JSON.stringify(actual) === JSON.stringify(expected) ?
-        console.log("Passed: " + actual + " == " + expected) : console.log("Failed: " + actual + " != " + expected);
+    if (actual instanceof Error)
+        console.log("Failed: " + actual.message);
+    else
+        JSON.stringify(actual) === JSON.stringify(expected) ?
+            console.log("Passed: " + actual + " == " + expected) : console.log("Failed: " + actual + " != " + expected);
 }
 
 // run the example tests
