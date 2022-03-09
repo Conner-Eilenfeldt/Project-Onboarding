@@ -18,14 +18,12 @@ function getItemsAt(arr, par) {
         else throw new Error("Unexpected Positional Parity");
 
         // filtering
-        if (arr.length % 2 == remainder) {
+        if (arr.length % 2 == remainder)
             items.push(arr.shift());
-            items = items.concat(getItemsAt(arr, par));
-        }
-        else {
+        else
             arr.shift();
-            items = items.concat(getItemsAt(arr, par));
-        }
+
+        items = items.concat(getItemsAt(arr, par));
 
         return items;
     }
