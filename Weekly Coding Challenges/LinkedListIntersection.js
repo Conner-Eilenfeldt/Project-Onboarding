@@ -80,6 +80,8 @@ function findIntersection(a, b) {
 
         bCurrent = bCurrent.next;
     }
+
+    return "No Intersection";
 }
 
 // function for testing the given examples
