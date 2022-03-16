@@ -60,25 +60,31 @@ class LinkedList {
     }
 }
 
-// find the intersection of the two linked lists using a set
+// find the intersection of two linked lists
 function findIntersection(a, b) {
     let aCurrent = a.head;
     let bCurrent = b.head;
 
-    let setA = new Set();
+    // get the difference in the list lengths
+    let diff = a.length - b.length;
 
-    // add all elements in list a to setA
-    while (aCurrent) {
-        setA.add(aCurrent.element);
-        aCurrent = aCurrent.next;
-    }
+    while (aCurrent && bCurrent) {
+        if (aCurrent.element == bCurrent.element)
+            return aCurrent.element;
 
-    // check if any element in list b is in setA (aka list a)
-    while (bCurrent) {
-        if (setA.has(bCurrent.element))
-            return bCurrent.element;
-
-        bCurrent = bCurrent.next;
+        // increment the lists based on the difference in lengths
+        if (diff > 0) {
+            aCurrent = aCurrent.next;
+            diff--;
+        }
+        else if (diff < 0) {
+            bCurrent = bCurrent.next;
+            diff++;
+        }
+        else {
+            aCurrent = aCurrent.next;
+            bCurrent = bCurrent.next;
+        }
     }
 
     return "No Intersection";
@@ -97,7 +103,7 @@ function testExamples() {
     b.add(1);
     b.add(8);
     b.add(10);
-    
+
     let output = findIntersection(a, b);
     test(output, 8);
 }
